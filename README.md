@@ -9,7 +9,7 @@ Pipeline de dados moderno aplicado a documentos **PDF, DOCX e TXT** usando **Arq
 | Componente | Versão | Função |
 |---|---|---|
 | Apache Airflow | 3.3.1 | Orquestração do pipeline (CeleryExecutor) |
-| Apache Tika | latest | Extração de texto e metadados via servidor REST |
+| Apache Tika | latest-full | Extração de texto, metadados e OCR via servidor REST |
 | Apache Spark | 4.0.1 | Processamento distribuído (Spark Connect) |
 | DuckDB | 1.0+ | Lakehouse local — camadas bronze / silver / gold |
 | dbt-duckdb | 1.8+ | Transformações SQL declarativas |
@@ -45,15 +45,32 @@ O `Dockerfile` do worker instala `torch` CPU via `requirements.txt` e tenta sobr
 
 ---
 
+## OCR — Documentos Escaneados
+
+A imagem `apache/tika:latest-full` inclui o **Tesseract OCR** pré-instalado. O Tika detecta automaticamente se o PDF possui camada de texto nativa ou se é uma imagem escaneada e aplica OCR quando necessário — **sem nenhuma configuração adicional**.
+
+| Tipo de documento | Comportamento |
+|---|---|
+| PDF com texto nativo | Extração direta — rápida e precisa |
+| PDF escaneado (imagem) | OCR automático via Tesseract em português |
+| DOCX | Extração de texto e metadados nativos |
+| TXT | Leitura direta do conteúdo |
+
+O idioma do OCR é configurado pela variável `TIKA_OCR_LANGUAGE=por` no container `tika-server`, garantindo alta precisão para documentos em português brasileiro e europeu.
+
+> PDFs escaneados levam mais tempo para processar pois o Tesseract analisa cada página como imagem. Para documentos grandes, o timeout da task `extrair_bronze` pode ser ajustado via `execution_timeout`.
+
+---
+
 ## Arquitetura Medallion
 
 ```
 datas/
- ├── *.pdf
+ ├── *.pdf  (texto nativo ou escaneado via OCR)
  ├── *.docx
  └── *.txt
        │
-       ▼ Apache Tika REST (tika-server:9998)
+       ▼ Apache Tika REST (tika-server:9998) + Tesseract OCR
   [BRONZE] bronze.documentos_raw        ← DuckDB
        │
        ▼ dbt (limpeza + normalização)
@@ -81,7 +98,7 @@ extrair_bronze → transformar_silver → transformar_gold → gerar_embeddings 
 
 | Task | O que faz |
 |---|---|
-| `extrair_bronze` | Lê todos os arquivos de `datas/`, chama o Tika REST (`service=text` + `service=meta`), persiste em `bronze.documentos_raw` no DuckDB |
+| `extrair_bronze` | Lê todos os arquivos de `datas/`, chama o Tika REST (`service=text` + `service=meta`) com OCR automático para PDFs escaneados, persiste em `bronze.documentos_raw` no DuckDB |
 | `transformar_silver` | Executa `dbt run --select silver` — limpa, normaliza e filtra documentos com menos de 50 chars |
 | `transformar_gold` | Executa `dbt run --select gold` — agrega métricas por tipo de documento em `main_gold.resumo_por_tipo` |
 | `gerar_embeddings` | Detecta GPU/CPU, carrega `PORTULAN/serafim-100m`, gera vetores dim 768 e persiste em `gold.documentos_embeddings` |
@@ -111,7 +128,7 @@ airflow_dbt_tikas/
 │   └── conf/
 │       └── spark-defaults.conf
 ├── airflow-worker/
-│   └── Dockerfile                   # Worker com torch CPU + tentativa CUDA
+│   └── Dockerfile                   # Worker com torch CPU + tentativa CUDA 12.4
 ├── warehouse/
 │   └── lakehouse.duckdb             # Arquivo DuckDB (bronze/silver/gold)
 ├── docker-compose-airflow.yml
@@ -128,7 +145,7 @@ airflow_dbt_tikas/
 | Airflow UI | `airflow-apiserver` | 8085 | Interface web do Airflow |
 | Spark UI | `spark-connect` | 4040 | Monitor de jobs Spark |
 | Spark Connect | `spark-connect` | 15002 | gRPC endpoint |
-| Tika REST | `tika-server` | 9998 | Extração de texto e metadados |
+| Tika REST + OCR | `tika-server` | 9998 | Extração de texto, metadados e OCR (Tesseract) |
 | Qdrant UI | `qdrant` | 6333 | Dashboard + API REST vetorial |
 | Qdrant gRPC | `qdrant` | 6334 | Interface gRPC |
 
@@ -147,6 +164,7 @@ Definidas no `.env` e injetadas em todos os containers Airflow:
 | `QDRANT_PORT` | `6333` | Porta do Qdrant |
 | `TIKA_SERVER_JAR` | `http://tika-server:9998` | URL do servidor Tika REST |
 | `TIKA_CLIENT_ONLY` | `True` | Força modo cliente REST (sem download de JAR) |
+| `TIKA_OCR_LANGUAGE` | `por` | Idioma do Tesseract OCR (português) |
 
 ---
 
@@ -157,6 +175,7 @@ Definidas no `.env` e injetadas em todos os containers Airflow:
 cp meus_documentos.pdf datas/
 ```
 Formatos suportados: `.pdf`, `.docx`, `.txt`
+PDFs escaneados são processados automaticamente via OCR.
 
 **2. Suba o ambiente**
 ```bash
@@ -223,7 +242,7 @@ grpcio-status>=1.74.0
 apache-airflow-providers-fab
 tika>=2.6.0
 sentence-transformers>=3.0.0
-torch>=2.0.0
+torch>=2.5.0
 qdrant-client>=1.9.0
 ```
 
@@ -276,7 +295,7 @@ O arquivo `lakehouse.duckdb` fica na pasta `warehouse/` do projeto e pode ser ab
 
 | Schema | Tabela | Descrição |
 |---|---|---|
-| `bronze` | `documentos_raw` | Dados brutos extraídos pelo Tika |
+| `bronze` | `documentos_raw` | Dados brutos extraídos pelo Tika (texto + OCR) |
 | `main_silver` | `documentos_clean` | Dados limpos e normalizados (dbt) |
 | `main_gold` | `resumo_por_tipo` | Agregação por tipo de documento (dbt) |
 | `gold` | `documentos_embeddings` | Vetores dim 768 gerados pelo modelo |
@@ -288,8 +307,12 @@ O arquivo `lakehouse.duckdb` fica na pasta `warehouse/` do projeto e pode ser ab
 
 **Queries úteis:**
 ```sql
--- Documentos extraídos pelo Tika
+-- Documentos extraídos pelo Tika (incluindo OCR)
 SELECT file_name, file_type, num_pages, content_length, author, title
+FROM bronze.documentos_raw;
+
+-- Verificar conteúdo extraído (texto completo)
+SELECT file_name, content
 FROM bronze.documentos_raw;
 
 -- Documentos limpos pela camada silver
@@ -299,7 +322,7 @@ FROM main_silver.documentos_clean;
 -- Resumo analítico por tipo
 SELECT * FROM main_gold.resumo_por_tipo;
 
--- Embeddings gerados (vetores truncados para visualização)
+-- Embeddings gerados (dimensão do vetor)
 SELECT doc_id, file_name, file_type, title,
        len(embedding) AS embedding_dim
 FROM gold.documentos_embeddings;

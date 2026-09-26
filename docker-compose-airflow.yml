@@ -231,10 +231,12 @@ services:
   # ── Extração de texto — Tika Server ─────────────────────────────────────────
 
   tika-server:
-    image: apache/tika:latest
+    image: apache/tika:latest-full
     container_name: tika-server
     ports:
       - "9998:9998"
+    environment:
+      - TIKA_OCR_LANGUAGE=por
     restart: always
     networks:
       - pipeline_network
