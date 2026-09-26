@@ -1,0 +1,12 @@
+pyspark==4.0.0
+duckdb>=1.0.0
+dbt-duckdb>=1.8.0
+pyarrow>=10.0.0
+pandas>=2.0.0
+grpcio>=1.74.0
+grpcio-status>=1.74.0
+apache-airflow-providers-fab
+tika>=2.6.0
+sentence-transformers>=3.0.0
+torch>=2.0.0
+qdrant-client>=1.9.0

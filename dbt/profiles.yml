@@ -1,0 +1,7 @@
+docs_pipeline:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: /opt/airflow/work-dir/warehouse/lakehouse.duckdb
+      threads: 4

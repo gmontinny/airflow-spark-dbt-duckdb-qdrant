@@ -1,0 +1,51 @@
+{
+  "name": "airflow-spark-dbt-duckdb",
+  "dockerComposeFile": ["../docker-compose-airflow.yml"],
+  "service": "airflow-worker",
+  "runServices": [
+    "postgres",
+    "redis",
+    "airflow-apiserver",
+    "airflow-scheduler",
+    "airflow-dag-processor",
+    "airflow-worker",
+    "airflow-triggerer",
+    "spark-connect"
+  ],
+  "workspaceFolder": "/opt/airflow",
+  "overrideCommand": false,
+  "updateRemoteUserUID": true,
+  "envFile": "../.env",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "ms-azuretools.vscode-docker",
+        "tamasfe.even-better-toml",
+        "mtxr.sqltools",
+        "RandomFractalsInc.vscode-data-preview"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.analysis.typeCheckingMode": "basic",
+        "ruff.enable": true,
+        "python.testing.pytestEnabled": true,
+        "python.terminal.activateEnvironment": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "charliermarsh.ruff"
+      }
+    },
+    "jetbrains": {
+      "ide": "pycharm"
+    }
+  },
+
+  "postCreateCommand": "uv sync --locked && uv run pre-commit install",
+  "mounts": [
+    "source=uv-cache,target=/root/.cache/uv,type=volume"
+  ]
+}

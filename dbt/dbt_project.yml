@@ -1,0 +1,16 @@
+name: docs_pipeline
+version: "1.0.0"
+profile: docs_pipeline
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  docs_pipeline:
+    silver:
+      +schema: silver
+      +materialized: table
+    gold:
+      +schema: gold
+      +materialized: table

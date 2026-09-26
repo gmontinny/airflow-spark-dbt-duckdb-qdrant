@@ -1,0 +1,50 @@
+[project]
+name = "airflow-spark-dbt-duckdb"
+version = "0.1.0"
+description = "Pipeline: Airflow 3x + Spark 4x Connect + DBT + DuckDB"
+requires-python = ">=3.10"
+dependencies = [
+    "pyspark>=4.0.0",
+    "duckdb>=1.0.0",
+    "dbt-duckdb>=1.8.0",
+    "pyarrow>=10.0.0",
+    "pandas>=2.0.0",
+    "grpcio>=1.74.0",
+    "grpcio-status>=1.74.0",
+    "python-dotenv>=1.1.1",
+    "apache-airflow-providers-fab",
+    "apache-airflow-providers-apache-spark>=4.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit==4.2.0",
+    "pytest",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["*.py", "dags/**/*.py"]
+
+[tool.uv]
+default-groups = ["dev"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+select = ["E", "F", "I"]
+ignore = ["F821", "E402"]
+exclude = [".git", "__pycache__", "build", "dist"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

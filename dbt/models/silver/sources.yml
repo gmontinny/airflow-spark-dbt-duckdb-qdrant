@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: documentos_raw
+        description: "Documentos extraídos pelo Apache Tika (PDF, DOCX, TXT)"
+        columns:
+          - name: doc_id
+            description: "Identificador único do documento"
+          - name: file_name
+            description: "Nome do arquivo original"
+          - name: file_type
+            description: "Extensão do arquivo (pdf, docx, txt)"
+          - name: content
+            description: "Texto extraído pelo Tika"
+          - name: num_pages
+            description: "Número de páginas"
+          - name: content_length
+            description: "Tamanho do conteúdo em caracteres"
+          - name: author
+            description: "Autor do documento (metadado)"
+          - name: title
+            description: "Título do documento (metadado)"
+          - name: created_at
+            description: "Data de criação do documento"
+          - name: ingested_at
+            description: "Timestamp de ingestão no pipeline"

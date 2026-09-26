@@ -1,0 +1,714 @@
+[0m11:46:27.007560 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3e157a40>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3ed5a0c0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3e156ab0>]}
+
+
+============================== 11:46:27.037135 | c8f46512-175b-42dc-b89a-4499da3970db ==============================
+[0m11:46:27.037135 [info ] [MainThread]: Running with dbt=1.12.5
+[0m11:46:27.037714 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'write_json': 'True', 'indirect_selection': 'eager', 'log_path': '/opt/airflow/dbt/logs', 'quiet': 'False', 'cache_selected_only': 'False', 'warn_error': 'None', 'log_cache_events': 'False', 'partial_parse': 'True', 'invocation_command': 'dbt debug --project-dir /opt/airflow/dbt --profiles-dir /opt/airflow/dbt', 'printer_width': '80', 'fail_fast': 'False', 'use_colors': 'True', 'hints_enabled': 'True', 'debug': 'False', 'introspect': 'True', 'log_format': 'default', 'maximum_seed_size_mib': '1', 'no_print': 'None', 'use_experimental_parser': 'False', 'profiles_dir': '/opt/airflow/dbt', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'empty': 'None'}
+[0m11:46:27.069440 [info ] [MainThread]: dbt version: 1.12.5
+[0m11:46:27.069946 [info ] [MainThread]: python version: 3.12.13
+[0m11:46:27.070366 [info ] [MainThread]: python path: /usr/python/bin/python3.12
+[0m11:46:27.070761 [info ] [MainThread]: os info: Linux-5.15.153.1-microsoft-standard-WSL2-x86_64-with-glibc2.36
+[0m11:46:27.162849 [info ] [MainThread]: Using profiles dir at /opt/airflow/dbt
+[0m11:46:27.163517 [info ] [MainThread]: Using profiles.yml file at /opt/airflow/dbt/profiles.yml
+[0m11:46:27.163968 [info ] [MainThread]: Using dbt_project.yml file at /opt/airflow/dbt/dbt_project.yml
+[0m11:46:27.165454 [info ] [MainThread]: adapter type: duckdb
+[0m11:46:27.166137 [info ] [MainThread]: adapter version: 1.11.0
+[0m11:46:27.262901 [info ] [MainThread]: Configuration:
+[0m11:46:27.263625 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m11:46:27.264227 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m11:46:27.264731 [info ] [MainThread]: Required dependencies:
+[0m11:46:27.265247 [debug] [MainThread]: Executing "git --help"
+[0m11:46:27.274457 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m11:46:27.275057 [debug] [MainThread]: STDERR: "b''"
+[0m11:46:27.275422 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m11:46:27.275872 [info ] [MainThread]: Connection:
+[0m11:46:27.276356 [info ] [MainThread]:   database: lakehouse
+[0m11:46:27.276832 [info ] [MainThread]:   schema: main
+[0m11:46:27.277278 [info ] [MainThread]:   path: /opt/airflow/work-dir/warehouse/lakehouse.duckdb
+[0m11:46:27.277697 [info ] [MainThread]:   config_options: None
+[0m11:46:27.278149 [info ] [MainThread]:   extensions: None
+[0m11:46:27.278650 [info ] [MainThread]:   settings: {}
+[0m11:46:27.279138 [info ] [MainThread]:   external_root: .
+[0m11:46:27.279606 [info ] [MainThread]:   use_credential_provider: None
+[0m11:46:27.280043 [info ] [MainThread]:   attach: None
+[0m11:46:27.280448 [info ] [MainThread]:   filesystems: None
+[0m11:46:27.280908 [info ] [MainThread]:   remote: None
+[0m11:46:27.281374 [info ] [MainThread]:   plugins: None
+[0m11:46:27.281834 [info ] [MainThread]:   disable_transactions: False
+[0m11:46:27.282450 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m11:46:27.353166 [debug] [MainThread]: Acquiring new duckdb connection 'debug'
+[0m11:46:27.389985 [debug] [MainThread]: Using duckdb connection "debug"
+[0m11:46:27.390648 [debug] [MainThread]: On debug: select 1 as id
+[0m11:46:27.391103 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:46:27.413404 [debug] [MainThread]: SQL status: OK in 0.022 seconds
+[0m11:46:27.414425 [debug] [MainThread]: On debug: Close
+[0m11:46:27.414831 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m11:46:27.415243 [info ] [MainThread]: [32mAll checks passed![0m
+[0m11:46:27.416178 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 0.48041734, "process_in_blocks": "2776", "process_kernel_time": 0.13226, "process_mem_max_rss": "169744", "process_out_blocks": "1352", "process_user_time": 1.642229}
+[0m11:46:27.416754 [debug] [MainThread]: Command `dbt debug` succeeded at 11:46:27.416648 after 0.48 seconds
+[0m11:46:27.417156 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m11:46:27.417552 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3de57ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3e026bd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f3e025f70>]}
+[0m11:46:27.418013 [debug] [MainThread]: Flushing usage events
+[0m11:46:28.313315 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m11:58:15.814097 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6e2a59d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6e9b9fa0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6e2a7a40>]}
+
+
+============================== 11:58:15.848243 | 368aba8c-1948-41ee-956a-2c27410ea107 ==============================
+[0m11:58:15.848243 [info ] [MainThread]: Running with dbt=1.12.5
+[0m11:58:15.848873 [debug] [MainThread]: running dbt with arguments {'no_print': 'None', 'printer_width': '80', 'log_format': 'default', 'fail_fast': 'False', 'static_parser': 'True', 'warn_error': 'None', 'log_cache_events': 'False', 'version_check': 'True', 'maximum_seed_size_mib': '1', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'invocation_command': 'dbt run --select silver --project-dir /opt/airflow/dbt --profiles-dir /opt/airflow/dbt', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'write_json': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'introspect': 'True', 'target_path': 'None', 'cache_selected_only': 'False', 'quiet': 'False', 'hints_enabled': 'True', 'empty': 'False', 'use_experimental_parser': 'False', 'debug': 'False', 'profiles_dir': '/opt/airflow/dbt', 'log_path': '/opt/airflow/dbt/logs'}
+[0m11:58:16.072395 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6db160c0>]}
+[0m11:58:16.124239 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6d93c620>]}
+[0m11:58:16.126182 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m11:58:16.197573 [debug] [MainThread]: checksum: 422c5228a24127d196d63afb509920b6fc76e1c157b99fb82a1ebdd8d37f786c, vars: {}, profile: docs_pipeline, target: dev, version: 1.12.5
+[0m11:58:16.199814 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m11:58:16.200281 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6d58c590>]}
+[0m11:58:18.140244 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a4335fa40>]}
+[0m11:58:18.238906 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:18.244549 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:18.258052 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:18.268622 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a43215160>]}
+[0m11:58:18.269133 [info ] [MainThread]: Found 2 models, 1 source, 500 macros
+[0m11:58:18.269593 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a43209160>]}
+[0m11:58:18.270943 [info ] [MainThread]: 
+[0m11:58:18.271390 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m11:58:18.271795 [info ] [MainThread]: 
+[0m11:58:18.272373 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m11:58:18.273305 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse'
+[0m11:58:18.316565 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse"
+[0m11:58:18.317143 [debug] [ThreadPool]: On list_lakehouse: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"lakehouse"'
+    
+  
+  
+[0m11:58:18.317551 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:18.341180 [debug] [ThreadPool]: SQL status: OK in 0.024 seconds
+[0m11:58:18.342640 [debug] [ThreadPool]: On list_lakehouse: Close
+[0m11:58:18.343508 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_lakehouse, now create_lakehouse_main_silver)
+[0m11:58:18.344062 [debug] [ThreadPool]: Creating schema "database: "lakehouse"
+schema: "main_silver"
+"
+[0m11:58:18.350666 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:18.351207 [debug] [ThreadPool]: On create_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_silver"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='lakehouse'
+        and type != 'duckdb'
+    
+  
+[0m11:58:18.351794 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:18.353711 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:18.354998 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:18.355444 [debug] [ThreadPool]: On create_lakehouse_main_silver: BEGIN
+[0m11:58:18.356161 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:18.356587 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:18.357157 [debug] [ThreadPool]: On create_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_silver"} */
+
+    
+    
+        create schema if not exists "lakehouse"."main_silver"
+    
+[0m11:58:18.358866 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m11:58:18.359803 [debug] [ThreadPool]: On create_lakehouse_main_silver: COMMIT
+[0m11:58:18.360206 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:18.360637 [debug] [ThreadPool]: On create_lakehouse_main_silver: COMMIT
+[0m11:58:18.364965 [debug] [ThreadPool]: SQL status: OK in 0.004 seconds
+[0m11:58:18.365387 [debug] [ThreadPool]: On create_lakehouse_main_silver: Close
+[0m11:58:18.366962 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_lakehouse_main_silver, now list_lakehouse_main_gold)
+[0m11:58:18.367718 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse_main_silver'
+[0m11:58:18.372129 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:18.373635 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:18.374464 [debug] [ThreadPool]: On list_lakehouse_main_gold: BEGIN
+[0m11:58:18.375470 [debug] [ThreadPool]: On list_lakehouse_main_silver: BEGIN
+[0m11:58:18.376221 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:18.376902 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:18.378363 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:18.378771 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:18.379127 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:18.379599 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:18.380114 [debug] [ThreadPool]: On list_lakehouse_main_gold: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_gold"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:18.380592 [debug] [ThreadPool]: On list_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_silver"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_silver'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:18.383446 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:18.383986 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:18.385390 [debug] [ThreadPool]: On list_lakehouse_main_gold: ROLLBACK
+[0m11:58:18.386511 [debug] [ThreadPool]: On list_lakehouse_main_silver: ROLLBACK
+[0m11:58:18.387257 [debug] [ThreadPool]: On list_lakehouse_main_gold: Close
+[0m11:58:18.388654 [debug] [ThreadPool]: On list_lakehouse_main_silver: Close
+[0m11:58:18.389509 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a5d513680>]}
+[0m11:58:18.390061 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:18.390546 [debug] [MainThread]: On master: BEGIN
+[0m11:58:18.391123 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:58:18.391972 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:18.392405 [debug] [MainThread]: On master: COMMIT
+[0m11:58:18.392817 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:18.393225 [debug] [MainThread]: On master: COMMIT
+[0m11:58:18.393934 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:18.394369 [debug] [MainThread]: On master: Close
+[0m11:58:18.399317 [debug] [Thread-1 (]: Began running node model.docs_pipeline.documentos_clean
+[0m11:58:18.399914 [info ] [Thread-1 (]: 1 of 1 START sql table model main_silver.documentos_clean ...................... [RUN]
+[0m11:58:18.400477 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_lakehouse_main_silver, now model.docs_pipeline.documentos_clean)
+[0m11:58:18.400912 [debug] [Thread-1 (]: Began compiling node model.docs_pipeline.documentos_clean
+[0m11:58:18.406517 [debug] [Thread-1 (]: Writing injected SQL for node "model.docs_pipeline.documentos_clean"
+[0m11:58:18.420656 [debug] [Thread-1 (]: Began executing node model.docs_pipeline.documentos_clean
+[0m11:58:18.468749 [debug] [Thread-1 (]: Writing runtime sql for node "model.docs_pipeline.documentos_clean"
+[0m11:58:18.483193 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:18.483718 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: BEGIN
+[0m11:58:18.484140 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m11:58:18.485097 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:18.485514 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:18.485956 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+
+    
+
+    create  table
+      "lakehouse"."main_silver"."documentos_clean__dbt_tmp"
+  
+    
+    as (
+      -- Normaliza e limpa os documentos extraídos pelo Tika
+SELECT
+    doc_id,
+    file_name,
+    file_type,
+    TRIM(content)                                           AS content,
+    CAST(num_pages AS INTEGER)                              AS num_pages,
+    CAST(content_length AS INTEGER)                         AS content_length,
+    author,
+    title,
+    TRY_CAST(NULLIF(TRIM(created_at), '') AS TIMESTAMP)    AS created_at,
+    TRY_CAST(ingested_at AS TIMESTAMP)                      AS ingested_at
+FROM "lakehouse"."bronze"."documentos_raw"
+WHERE content IS NOT NULL
+  AND TRIM(content) != ''
+  AND content_length > 50
+    );
+    
+  
+[0m11:58:18.492275 [debug] [Thread-1 (]: SQL status: OK in 0.006 seconds
+[0m11:58:18.497170 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:18.497649 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+alter table "lakehouse"."main_silver"."documentos_clean__dbt_tmp" rename to "documentos_clean"
+[0m11:58:18.499192 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:18.512486 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: COMMIT
+[0m11:58:18.513018 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:18.513453 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: COMMIT
+[0m11:58:18.517085 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m11:58:18.521096 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:18.521562 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+
+      drop table if exists "lakehouse"."main_silver"."documentos_clean__dbt_backup" cascade
+    
+[0m11:58:18.522368 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m11:58:18.524423 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: Close
+[0m11:58:18.525890 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '368aba8c-1948-41ee-956a-2c27410ea107', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6ed217c0>]}
+[0m11:58:18.526546 [info ] [Thread-1 (]: 1 of 1 OK created sql table model main_silver.documentos_clean ................. [[32mOK[0m in 0.12s]
+[0m11:58:18.527176 [debug] [Thread-1 (]: Finished running node model.docs_pipeline.documentos_clean
+[0m11:58:18.528802 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:18.529207 [debug] [MainThread]: On master: BEGIN
+[0m11:58:18.529599 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m11:58:18.530344 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:18.530741 [debug] [MainThread]: On master: COMMIT
+[0m11:58:18.531144 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:18.531601 [debug] [MainThread]: On master: COMMIT
+[0m11:58:18.532233 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:18.532635 [debug] [MainThread]: On master: Close
+[0m11:58:18.533124 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m11:58:18.533498 [debug] [MainThread]: Connection 'list_lakehouse_main_gold' was properly closed.
+[0m11:58:18.533864 [debug] [MainThread]: Connection 'model.docs_pipeline.documentos_clean' was properly closed.
+[0m11:58:18.534261 [info ] [MainThread]: 
+[0m11:58:18.534702 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m11:58:18.535412 [debug] [MainThread]: Command end result
+[0m11:58:18.577123 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:18.582344 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:18.587260 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:18.594984 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m11:58:18.595389 [info ] [MainThread]: 
+[0m11:58:18.595919 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m11:58:18.596371 [info ] [MainThread]: 
+[0m11:58:18.596833 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
+[0m11:58:18.597792 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 2.0911605, "process_in_blocks": "936", "process_kernel_time": 0.38609, "process_mem_max_rss": "247872", "process_out_blocks": "4616", "process_user_time": 3.131622}
+[0m11:58:18.598305 [debug] [MainThread]: Command `dbt run` succeeded at 11:58:18.598221 after 2.09 seconds
+[0m11:58:18.598748 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a724e3350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a5d513680>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f6a6eca3a70>]}
+[0m11:58:18.599194 [debug] [MainThread]: Flushing usage events
+[0m11:58:19.245114 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m11:58:51.374888 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa6a23f50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa7871040>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fab01be30>]}
+
+
+============================== 11:58:51.377918 | 75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081 ==============================
+[0m11:58:51.377918 [info ] [MainThread]: Running with dbt=1.12.5
+[0m11:58:51.378542 [debug] [MainThread]: running dbt with arguments {'hints_enabled': 'True', 'empty': 'False', 'warn_error': 'None', 'debug': 'False', 'no_print': 'None', 'target_path': 'None', 'log_format': 'default', 'quiet': 'False', 'printer_width': '80', 'partial_parse': 'True', 'cache_selected_only': 'False', 'use_colors': 'True', 'indirect_selection': 'eager', 'introspect': 'True', 'use_experimental_parser': 'False', 'invocation_command': 'dbt run --select silver --project-dir /opt/airflow/dbt --profiles-dir /opt/airflow/dbt', 'send_anonymous_usage_stats': 'True', 'maximum_seed_size_mib': '1', 'log_path': '/opt/airflow/dbt/logs', 'static_parser': 'True', 'log_cache_events': 'False', 'fail_fast': 'False', 'version_check': 'True', 'write_json': 'True', 'profiles_dir': '/opt/airflow/dbt', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])'}
+[0m11:58:51.604592 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa68dc2f0>]}
+[0m11:58:51.665329 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa68dc740>]}
+[0m11:58:51.667495 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m11:58:51.748940 [debug] [MainThread]: checksum: 422c5228a24127d196d63afb509920b6fc76e1c157b99fb82a1ebdd8d37f786c, vars: {}, profile: docs_pipeline, target: dev, version: 1.12.5
+[0m11:58:51.902462 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m11:58:51.903014 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m11:58:51.903582 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m11:58:51.917283 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f96be7980>]}
+[0m11:58:52.096702 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:52.102171 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:52.116324 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:52.126513 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f96bb1fa0>]}
+[0m11:58:52.127042 [info ] [MainThread]: Found 2 models, 1 source, 500 macros
+[0m11:58:52.127487 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f967762a0>]}
+[0m11:58:52.128898 [info ] [MainThread]: 
+[0m11:58:52.129358 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m11:58:52.129800 [info ] [MainThread]: 
+[0m11:58:52.130457 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m11:58:52.132195 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse'
+[0m11:58:52.165732 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse"
+[0m11:58:52.166409 [debug] [ThreadPool]: On list_lakehouse: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"lakehouse"'
+    
+  
+  
+[0m11:58:52.166877 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:52.193310 [debug] [ThreadPool]: SQL status: OK in 0.026 seconds
+[0m11:58:52.195131 [debug] [ThreadPool]: On list_lakehouse: Close
+[0m11:58:52.196224 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_lakehouse, now create_lakehouse_main_silver)
+[0m11:58:52.196934 [debug] [ThreadPool]: Creating schema "database: "lakehouse"
+schema: "main_silver"
+"
+[0m11:58:52.204046 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:52.204492 [debug] [ThreadPool]: On create_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_silver"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='lakehouse'
+        and type != 'duckdb'
+    
+  
+[0m11:58:52.204895 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:52.206768 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:52.208099 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:52.208521 [debug] [ThreadPool]: On create_lakehouse_main_silver: BEGIN
+[0m11:58:52.209310 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:52.209719 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:52.210395 [debug] [ThreadPool]: On create_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_silver"} */
+
+    
+    
+        create schema if not exists "lakehouse"."main_silver"
+    
+[0m11:58:52.211249 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:52.212150 [debug] [ThreadPool]: On create_lakehouse_main_silver: COMMIT
+[0m11:58:52.212570 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_silver"
+[0m11:58:52.212975 [debug] [ThreadPool]: On create_lakehouse_main_silver: COMMIT
+[0m11:58:52.213684 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:52.214096 [debug] [ThreadPool]: On create_lakehouse_main_silver: Close
+[0m11:58:52.215527 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_lakehouse_main_silver, now list_lakehouse_main_silver)
+[0m11:58:52.219850 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:52.220395 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse_main_gold'
+[0m11:58:52.220776 [debug] [ThreadPool]: On list_lakehouse_main_silver: BEGIN
+[0m11:58:52.222066 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:52.222568 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:52.223012 [debug] [ThreadPool]: On list_lakehouse_main_gold: BEGIN
+[0m11:58:52.223777 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:52.224150 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:52.224826 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:52.225311 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:52.225825 [debug] [ThreadPool]: On list_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_silver"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_silver'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:52.226335 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:52.227099 [debug] [ThreadPool]: On list_lakehouse_main_gold: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_gold"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:52.230256 [debug] [ThreadPool]: SQL status: OK in 0.003 seconds
+[0m11:58:52.230661 [debug] [ThreadPool]: SQL status: OK in 0.003 seconds
+[0m11:58:52.231966 [debug] [ThreadPool]: On list_lakehouse_main_silver: ROLLBACK
+[0m11:58:52.233104 [debug] [ThreadPool]: On list_lakehouse_main_gold: ROLLBACK
+[0m11:58:52.233824 [debug] [ThreadPool]: On list_lakehouse_main_silver: Close
+[0m11:58:52.234199 [debug] [ThreadPool]: On list_lakehouse_main_gold: Close
+[0m11:58:52.235731 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa7763ad0>]}
+[0m11:58:52.236338 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:52.236765 [debug] [MainThread]: On master: BEGIN
+[0m11:58:52.237176 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:58:52.237979 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:52.238396 [debug] [MainThread]: On master: COMMIT
+[0m11:58:52.238810 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:52.239235 [debug] [MainThread]: On master: COMMIT
+[0m11:58:52.239926 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:52.240389 [debug] [MainThread]: On master: Close
+[0m11:58:52.243988 [debug] [Thread-1 (]: Began running node model.docs_pipeline.documentos_clean
+[0m11:58:52.244609 [info ] [Thread-1 (]: 1 of 1 START sql table model main_silver.documentos_clean ...................... [RUN]
+[0m11:58:52.245249 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_lakehouse_main_gold, now model.docs_pipeline.documentos_clean)
+[0m11:58:52.245703 [debug] [Thread-1 (]: Began compiling node model.docs_pipeline.documentos_clean
+[0m11:58:52.251789 [debug] [Thread-1 (]: Writing injected SQL for node "model.docs_pipeline.documentos_clean"
+[0m11:58:52.258415 [debug] [Thread-1 (]: Began executing node model.docs_pipeline.documentos_clean
+[0m11:58:52.308590 [debug] [Thread-1 (]: Writing runtime sql for node "model.docs_pipeline.documentos_clean"
+[0m11:58:52.314926 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.315401 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: BEGIN
+[0m11:58:52.315845 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m11:58:52.316788 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:52.317251 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.317708 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+
+    
+
+    create  table
+      "lakehouse"."main_silver"."documentos_clean__dbt_tmp"
+  
+    
+    as (
+      -- Normaliza e limpa os documentos extraídos pelo Tika
+SELECT
+    doc_id,
+    file_name,
+    file_type,
+    TRIM(content)                                           AS content,
+    CAST(num_pages AS INTEGER)                              AS num_pages,
+    CAST(content_length AS INTEGER)                         AS content_length,
+    author,
+    title,
+    TRY_CAST(NULLIF(TRIM(created_at), '') AS TIMESTAMP)    AS created_at,
+    TRY_CAST(ingested_at AS TIMESTAMP)                      AS ingested_at
+FROM "lakehouse"."bronze"."documentos_raw"
+WHERE content IS NOT NULL
+  AND TRIM(content) != ''
+  AND content_length > 50
+    );
+    
+  
+[0m11:58:52.325510 [debug] [Thread-1 (]: SQL status: OK in 0.007 seconds
+[0m11:58:52.330072 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.330521 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+
+    SELECT index_name
+    FROM duckdb_indexes()
+    WHERE database_name = 'lakehouse'
+      AND schema_name = 'main_silver'
+      AND table_name = 'documentos_clean'
+  
+[0m11:58:52.331556 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:52.336802 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.337360 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+alter table "lakehouse"."main_silver"."documentos_clean" rename to "documentos_clean__dbt_backup"
+[0m11:58:52.339062 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:52.341302 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.341762 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+alter table "lakehouse"."main_silver"."documentos_clean__dbt_tmp" rename to "documentos_clean"
+[0m11:58:52.342559 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m11:58:52.357383 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: COMMIT
+[0m11:58:52.358017 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.358551 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: COMMIT
+[0m11:58:52.364302 [debug] [Thread-1 (]: SQL status: OK in 0.005 seconds
+[0m11:58:52.368703 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.documentos_clean"
+[0m11:58:52.369255 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.documentos_clean"} */
+
+      drop table if exists "lakehouse"."main_silver"."documentos_clean__dbt_backup" cascade
+    
+[0m11:58:52.372485 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m11:58:52.374709 [debug] [Thread-1 (]: On model.docs_pipeline.documentos_clean: Close
+[0m11:58:52.376174 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '75bc2eec-1ad6-4cf6-ba5b-c5c09ee02081', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f7ada27e0>]}
+[0m11:58:52.376814 [info ] [Thread-1 (]: 1 of 1 OK created sql table model main_silver.documentos_clean ................. [[32mOK[0m in 0.13s]
+[0m11:58:52.377460 [debug] [Thread-1 (]: Finished running node model.docs_pipeline.documentos_clean
+[0m11:58:52.379205 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:52.379621 [debug] [MainThread]: On master: BEGIN
+[0m11:58:52.380006 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m11:58:52.380809 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:52.381236 [debug] [MainThread]: On master: COMMIT
+[0m11:58:52.381639 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:52.382018 [debug] [MainThread]: On master: COMMIT
+[0m11:58:52.382655 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:52.383058 [debug] [MainThread]: On master: Close
+[0m11:58:52.383562 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m11:58:52.383929 [debug] [MainThread]: Connection 'list_lakehouse_main_silver' was properly closed.
+[0m11:58:52.384316 [debug] [MainThread]: Connection 'model.docs_pipeline.documentos_clean' was properly closed.
+[0m11:58:52.384747 [info ] [MainThread]: 
+[0m11:58:52.385228 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 0.25 seconds (0.25s).
+[0m11:58:52.386083 [debug] [MainThread]: Command end result
+[0m11:58:52.428544 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:52.433920 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:52.438610 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:52.446963 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m11:58:52.447368 [info ] [MainThread]: 
+[0m11:58:52.447876 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m11:58:52.448315 [info ] [MainThread]: 
+[0m11:58:52.448783 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
+[0m11:58:52.449704 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.1575863, "process_in_blocks": "0", "process_kernel_time": 0.261397, "process_mem_max_rss": "249064", "process_out_blocks": "0", "process_user_time": 2.131391}
+[0m11:58:52.450294 [debug] [MainThread]: Command `dbt run` succeeded at 11:58:52.450211 after 1.16 seconds
+[0m11:58:52.450739 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5fa7412ed0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f96756fc0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f5f967920c0>]}
+[0m11:58:52.451172 [debug] [MainThread]: Flushing usage events
+[0m11:58:53.040268 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m11:58:55.157949 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a38582780>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a38583e60>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a3a35ffe0>]}
+
+
+============================== 11:58:55.161041 | 18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4 ==============================
+[0m11:58:55.161041 [info ] [MainThread]: Running with dbt=1.12.5
+[0m11:58:55.161659 [debug] [MainThread]: running dbt with arguments {'hints_enabled': 'True', 'use_experimental_parser': 'False', 'use_colors': 'True', 'profiles_dir': '/opt/airflow/dbt', 'empty': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'version_check': 'True', 'log_cache_events': 'False', 'maximum_seed_size_mib': '1', 'log_path': '/opt/airflow/dbt/logs', 'debug': 'False', 'write_json': 'True', 'indirect_selection': 'eager', 'target_path': 'None', 'no_print': 'None', 'partial_parse': 'True', 'log_format': 'default', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt run --select gold --project-dir /opt/airflow/dbt --profiles-dir /opt/airflow/dbt', 'warn_error': 'None', 'cache_selected_only': 'False', 'quiet': 'False', 'fail_fast': 'False', 'introspect': 'True', 'printer_width': '80'}
+[0m11:58:55.372339 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a387b3800>]}
+[0m11:58:55.431771 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a38943140>]}
+[0m11:58:55.433994 [info ] [MainThread]: Registered adapter: duckdb=1.11.0
+[0m11:58:55.511013 [debug] [MainThread]: checksum: 422c5228a24127d196d63afb509920b6fc76e1c157b99fb82a1ebdd8d37f786c, vars: {}, profile: docs_pipeline, target: dev, version: 1.12.5
+[0m11:58:55.662321 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m11:58:55.662877 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m11:58:55.663283 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m11:58:55.672834 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a33ceede0>]}
+[0m11:58:55.850724 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:55.855967 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:55.869777 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:55.880996 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a33cbd4f0>]}
+[0m11:58:55.881565 [info ] [MainThread]: Found 2 models, 1 source, 500 macros
+[0m11:58:55.882019 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a27b3df10>]}
+[0m11:58:55.883344 [info ] [MainThread]: 
+[0m11:58:55.883800 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m11:58:55.884234 [info ] [MainThread]: 
+[0m11:58:55.884878 [debug] [MainThread]: Acquiring new duckdb connection 'master'
+[0m11:58:55.886608 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse'
+[0m11:58:55.920281 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse"
+[0m11:58:55.920886 [debug] [ThreadPool]: On list_lakehouse: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse"} */
+
+    
+    select schema_name
+    from system.information_schema.schemata
+    
+    where lower(catalog_name) = '"lakehouse"'
+    
+  
+  
+[0m11:58:55.921302 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:55.947071 [debug] [ThreadPool]: SQL status: OK in 0.026 seconds
+[0m11:58:55.948511 [debug] [ThreadPool]: On list_lakehouse: Close
+[0m11:58:55.949374 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_lakehouse, now create_lakehouse_main_gold)
+[0m11:58:55.950138 [debug] [ThreadPool]: Creating schema "database: "lakehouse"
+schema: "main_gold"
+"
+[0m11:58:55.957557 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_gold"
+[0m11:58:55.958020 [debug] [ThreadPool]: On create_lakehouse_main_gold: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_gold"} */
+
+    
+        select type from duckdb_databases()
+        where lower(database_name)='lakehouse'
+        and type != 'duckdb'
+    
+  
+[0m11:58:55.958455 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:55.959654 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m11:58:55.960910 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_gold"
+[0m11:58:55.961340 [debug] [ThreadPool]: On create_lakehouse_main_gold: BEGIN
+[0m11:58:55.962788 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m11:58:55.963199 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_gold"
+[0m11:58:55.963635 [debug] [ThreadPool]: On create_lakehouse_main_gold: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "create_lakehouse_main_gold"} */
+
+    
+    
+        create schema if not exists "lakehouse"."main_gold"
+    
+[0m11:58:55.964508 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:55.965359 [debug] [ThreadPool]: On create_lakehouse_main_gold: COMMIT
+[0m11:58:55.965775 [debug] [ThreadPool]: Using duckdb connection "create_lakehouse_main_gold"
+[0m11:58:55.966181 [debug] [ThreadPool]: On create_lakehouse_main_gold: COMMIT
+[0m11:58:55.966912 [debug] [ThreadPool]: SQL status: OK in 0.000 seconds
+[0m11:58:55.967336 [debug] [ThreadPool]: On create_lakehouse_main_gold: Close
+[0m11:58:55.968711 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly create_lakehouse_main_gold, now list_lakehouse_main_silver)
+[0m11:58:55.970056 [debug] [ThreadPool]: Acquiring new duckdb connection 'list_lakehouse_main_gold'
+[0m11:58:55.974010 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:55.975341 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:55.975812 [debug] [ThreadPool]: On list_lakehouse_main_silver: BEGIN
+[0m11:58:55.976264 [debug] [ThreadPool]: On list_lakehouse_main_gold: BEGIN
+[0m11:58:55.976707 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m11:58:55.977147 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m11:58:55.978028 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m11:58:55.978390 [debug] [ThreadPool]: SQL status: OK in 0.001 seconds
+[0m11:58:55.978711 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_silver"
+[0m11:58:55.979145 [debug] [ThreadPool]: Using duckdb connection "list_lakehouse_main_gold"
+[0m11:58:55.979600 [debug] [ThreadPool]: On list_lakehouse_main_silver: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_silver"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_silver'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:55.980084 [debug] [ThreadPool]: On list_lakehouse_main_gold: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "connection_name": "list_lakehouse_main_gold"} */
+select
+      'lakehouse' as database,
+      table_name as name,
+      table_schema as schema,
+      CASE table_type
+        WHEN 'BASE TABLE' THEN 'table'
+        WHEN 'VIEW' THEN 'view'
+        WHEN 'LOCAL TEMPORARY' THEN 'table'
+        END as type
+    from system.information_schema.tables
+    where lower(table_schema) = 'main_gold'
+    and lower(table_catalog) = 'lakehouse'
+  
+[0m11:58:55.982577 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:55.982910 [debug] [ThreadPool]: SQL status: OK in 0.002 seconds
+[0m11:58:55.984157 [debug] [ThreadPool]: On list_lakehouse_main_silver: ROLLBACK
+[0m11:58:55.985250 [debug] [ThreadPool]: On list_lakehouse_main_gold: ROLLBACK
+[0m11:58:55.985882 [debug] [ThreadPool]: On list_lakehouse_main_silver: Close
+[0m11:58:55.986323 [debug] [ThreadPool]: On list_lakehouse_main_gold: Close
+[0m11:58:55.987764 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a2784a360>]}
+[0m11:58:55.988310 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:55.988726 [debug] [MainThread]: On master: BEGIN
+[0m11:58:55.989137 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:58:55.989853 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:55.990266 [debug] [MainThread]: On master: COMMIT
+[0m11:58:55.990672 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:55.991065 [debug] [MainThread]: On master: COMMIT
+[0m11:58:55.991740 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:55.992183 [debug] [MainThread]: On master: Close
+[0m11:58:55.995390 [debug] [Thread-1 (]: Began running node model.docs_pipeline.resumo_por_tipo
+[0m11:58:55.995989 [info ] [Thread-1 (]: 1 of 1 START sql table model main_gold.resumo_por_tipo ......................... [RUN]
+[0m11:58:55.996554 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_lakehouse_main_gold, now model.docs_pipeline.resumo_por_tipo)
+[0m11:58:55.997005 [debug] [Thread-1 (]: Began compiling node model.docs_pipeline.resumo_por_tipo
+[0m11:58:56.002852 [debug] [Thread-1 (]: Writing injected SQL for node "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.013557 [debug] [Thread-1 (]: Began executing node model.docs_pipeline.resumo_por_tipo
+[0m11:58:56.062549 [debug] [Thread-1 (]: Writing runtime sql for node "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.073655 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.074261 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: BEGIN
+[0m11:58:56.074703 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m11:58:56.076640 [debug] [Thread-1 (]: SQL status: OK in 0.002 seconds
+[0m11:58:56.077101 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.077555 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.resumo_por_tipo"} */
+
+    
+
+    create  table
+      "lakehouse"."main_gold"."resumo_por_tipo__dbt_tmp"
+  
+    
+    as (
+      -- Resumo analítico por tipo de documento
+SELECT
+    file_type,
+    COUNT(*)                        AS total_documentos,
+    AVG(num_pages)                  AS media_paginas,
+    AVG(content_length)             AS media_chars,
+    MIN(ingested_at)                AS primeira_ingestao,
+    MAX(ingested_at)                AS ultima_ingestao
+FROM "lakehouse"."main_silver"."documentos_clean"
+GROUP BY file_type
+    );
+    
+  
+[0m11:58:56.084819 [debug] [Thread-1 (]: SQL status: OK in 0.007 seconds
+[0m11:58:56.089734 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.090280 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.resumo_por_tipo"} */
+
+    SELECT index_name
+    FROM duckdb_indexes()
+    WHERE database_name = 'lakehouse'
+      AND schema_name = 'main_gold'
+      AND table_name = 'resumo_por_tipo'
+  
+[0m11:58:56.091646 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:56.096856 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.097373 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.resumo_por_tipo"} */
+alter table "lakehouse"."main_gold"."resumo_por_tipo" rename to "resumo_por_tipo__dbt_backup"
+[0m11:58:56.098266 [debug] [Thread-1 (]: SQL status: OK in 0.000 seconds
+[0m11:58:56.100444 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.100931 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.resumo_por_tipo"} */
+alter table "lakehouse"."main_gold"."resumo_por_tipo__dbt_tmp" rename to "resumo_por_tipo"
+[0m11:58:56.102502 [debug] [Thread-1 (]: SQL status: OK in 0.001 seconds
+[0m11:58:56.117988 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: COMMIT
+[0m11:58:56.118616 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.119086 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: COMMIT
+[0m11:58:56.124726 [debug] [Thread-1 (]: SQL status: OK in 0.005 seconds
+[0m11:58:56.129384 [debug] [Thread-1 (]: Using duckdb connection "model.docs_pipeline.resumo_por_tipo"
+[0m11:58:56.129831 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: /* {"app": "dbt", "dbt_version": "1.12.5", "profile_name": "docs_pipeline", "target_name": "dev", "node_id": "model.docs_pipeline.resumo_por_tipo"} */
+
+      drop table if exists "lakehouse"."main_gold"."resumo_por_tipo__dbt_backup" cascade
+    
+[0m11:58:56.132813 [debug] [Thread-1 (]: SQL status: OK in 0.003 seconds
+[0m11:58:56.135025 [debug] [Thread-1 (]: On model.docs_pipeline.resumo_por_tipo: Close
+[0m11:58:56.136527 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '18ce3c15-98cf-4f2b-b3d6-ea15ccfc9dd4', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a33cbd550>]}
+[0m11:58:56.137260 [info ] [Thread-1 (]: 1 of 1 OK created sql table model main_gold.resumo_por_tipo .................... [[32mOK[0m in 0.14s]
+[0m11:58:56.138122 [debug] [Thread-1 (]: Finished running node model.docs_pipeline.resumo_por_tipo
+[0m11:58:56.140112 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:56.140646 [debug] [MainThread]: On master: BEGIN
+[0m11:58:56.141088 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m11:58:56.141918 [debug] [MainThread]: SQL status: OK in 0.001 seconds
+[0m11:58:56.142348 [debug] [MainThread]: On master: COMMIT
+[0m11:58:56.142765 [debug] [MainThread]: Using duckdb connection "master"
+[0m11:58:56.143177 [debug] [MainThread]: On master: COMMIT
+[0m11:58:56.143813 [debug] [MainThread]: SQL status: OK in 0.000 seconds
+[0m11:58:56.144344 [debug] [MainThread]: On master: Close
+[0m11:58:56.144885 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m11:58:56.145267 [debug] [MainThread]: Connection 'list_lakehouse_main_silver' was properly closed.
+[0m11:58:56.145658 [debug] [MainThread]: Connection 'model.docs_pipeline.resumo_por_tipo' was properly closed.
+[0m11:58:56.146063 [info ] [MainThread]: 
+[0m11:58:56.146499 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 0.26 seconds (0.26s).
+[0m11:58:56.147362 [debug] [MainThread]: Command end result
+[0m11:58:56.191768 [debug] [MainThread]: Wrote artifact WritableManifest to /opt/airflow/dbt/target/manifest.json
+[0m11:58:56.197209 [debug] [MainThread]: Wrote artifact SemanticManifest to /opt/airflow/dbt/target/semantic_manifest.json
+[0m11:58:56.202279 [debug] [MainThread]: Wrote artifact OsiDocument to /opt/airflow/dbt/target/osi_document.json
+[0m11:58:56.210701 [debug] [MainThread]: Wrote artifact RunExecutionResult to /opt/airflow/dbt/target/run_results.json
+[0m11:58:56.211143 [info ] [MainThread]: 
+[0m11:58:56.211666 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m11:58:56.212108 [info ] [MainThread]: 
+[0m11:58:56.212573 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1
+[0m11:58:56.213505 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 1.1362015, "process_in_blocks": "0", "process_kernel_time": 0.242284, "process_mem_max_rss": "246832", "process_out_blocks": "0", "process_user_time": 2.049323}
+[0m11:58:56.214029 [debug] [MainThread]: Command `dbt run` succeeded at 11:58:56.213945 after 1.14 seconds
+[0m11:58:56.214474 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a37a102f0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a33d0a240>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f7a27abc500>]}
+[0m11:58:56.214923 [debug] [MainThread]: Flushing usage events
+[0m11:58:56.821566 [debug] [MainThread]: An error was encountered while trying to flush usage events
