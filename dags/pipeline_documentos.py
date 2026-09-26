@@ -25,6 +25,8 @@ QDRANT_PORT       = int(os.getenv("QDRANT_PORT", "6333"))
 QDRANT_COLLECTION = "documentos_pt"
 EMBEDDING_MODEL   = "PORTULAN/serafim-100m-portuguese-pt-sentence-encoder"
 EMBEDDING_DIM     = 768
+CHUNK_SIZE        = 500
+CHUNK_OVERLAP     = 50
 TIKA_ENDPOINT     = os.getenv("TIKA_SERVER_JAR", "http://tika-server:9998")
 SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
@@ -189,11 +191,18 @@ def pipeline_documentos_nao_estruturados():
     @task(execution_timeout=timedelta(minutes=30))
     def gerar_embeddings(gold_count: int) -> int:
         """
-        Camada Gold — Vetorização: gera embeddings semânticos com
-        PORTULAN/serafim-100m e persiste em gold.documentos_embeddings.
+        Camada Gold — Vetorização: divide cada documento em chunks com overlap,
+        gera embeddings semânticos com PORTULAN/serafim-100m e persiste em
+        gold.documentos_embeddings (um registro por chunk).
         """
+        import pandas as pd
         from sentence_transformers import SentenceTransformer
         import torch
+
+        def _chunk_text(text: str, size: int, overlap: int) -> list[str]:
+            words = text.split()
+            step  = max(1, size - overlap)
+            return [" ".join(words[i:i + size]) for i in range(0, len(words), step) if words[i:i + size]]
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
         log.info("Device para embeddings: %s", device)
@@ -217,25 +226,41 @@ def pipeline_documentos_nao_estruturados():
         if silver_df.empty:
             raise RuntimeError("Nenhum documento na silver para vetorizar.")
 
-        log.info("Gerando embeddings para %d documentos...", len(silver_df))
+        chunks = []
+        for _, row in silver_df.iterrows():
+            for idx, chunk in enumerate(_chunk_text(row["content"], CHUNK_SIZE, CHUNK_OVERLAP)):
+                chunks.append({
+                    "doc_id":      row["doc_id"],
+                    "chunk_id":    f"{row['doc_id']}_{idx}",
+                    "chunk_index": idx,
+                    "file_name":   row["file_name"],
+                    "file_type":   row["file_type"],
+                    "title":       row["title"],
+                    "author":      row["author"],
+                    "chunk_text":  chunk,
+                })
+
+        log.info("Total de chunks: %d (de %d documentos)", len(chunks), len(silver_df))
+        chunks_df = pd.DataFrame(chunks)
+
         embeddings = model.encode(
-            silver_df["content"].tolist(),
-            batch_size=8,
+            chunks_df["chunk_text"].tolist(),
+            batch_size=32,
             show_progress_bar=False,
             normalize_embeddings=True,
         )
-        silver_df["embedding"] = [emb.tolist() for emb in embeddings]
+        chunks_df["embedding"] = [emb.tolist() for emb in embeddings]
 
         conn = _duckdb_connect(DUCKDB_PATH)
         try:
             conn.execute("CREATE SCHEMA IF NOT EXISTS gold")
             conn.execute("DROP TABLE IF EXISTS gold.documentos_embeddings")
-            conn.execute("CREATE TABLE gold.documentos_embeddings AS SELECT * FROM silver_df")
+            conn.execute("CREATE TABLE gold.documentos_embeddings AS SELECT * FROM chunks_df")
             count = conn.execute("SELECT COUNT(*) FROM gold.documentos_embeddings").fetchone()[0]
         finally:
             conn.close()
 
-        log.info("gold.documentos_embeddings: %d vetores", count)
+        log.info("gold.documentos_embeddings: %d chunks vetorizados", count)
         return count
 
     @task()
@@ -259,7 +284,8 @@ def pipeline_documentos_nao_estruturados():
         conn = _duckdb_connect(DUCKDB_PATH)
         try:
             rows = conn.execute(
-                "SELECT doc_id, file_name, file_type, title, author, embedding "
+                "SELECT chunk_id, doc_id, file_name, file_type, title, author, "
+                "chunk_index, chunk_text, embedding "
                 "FROM gold.documentos_embeddings"
             ).fetchall()
         finally:
@@ -268,13 +294,16 @@ def pipeline_documentos_nao_estruturados():
         points = [
             PointStruct(
                 id=abs(hash(row[0])) % (2 ** 63),
-                vector=list(row[5]),
+                vector=list(row[8]),
                 payload={
-                    "doc_id":    row[0],
-                    "file_name": row[1],
-                    "file_type": row[2],
-                    "title":     row[3],
-                    "author":    row[4],
+                    "chunk_id":    row[0],
+                    "doc_id":      row[1],
+                    "file_name":   row[2],
+                    "file_type":   row[3],
+                    "title":       row[4],
+                    "author":      row[5],
+                    "chunk_index": row[6],
+                    "chunk_text":  row[7],
                 },
             )
             for row in rows

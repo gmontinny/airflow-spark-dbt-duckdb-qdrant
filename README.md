@@ -101,8 +101,8 @@ extrair_bronze → transformar_silver → transformar_gold → gerar_embeddings 
 | `extrair_bronze` | Lê todos os arquivos de `datas/`, chama o Tika REST (`service=text` + `service=meta`) com OCR automático para PDFs escaneados, persiste em `bronze.documentos_raw` no DuckDB |
 | `transformar_silver` | Executa `dbt run --select silver` — limpa, normaliza e filtra documentos com menos de 50 chars |
 | `transformar_gold` | Executa `dbt run --select gold` — agrega métricas por tipo de documento em `main_gold.resumo_por_tipo` |
-| `gerar_embeddings` | Detecta GPU/CPU, carrega `PORTULAN/serafim-100m`, gera vetores dim 768 e persiste em `gold.documentos_embeddings` |
-| `indexar_qdrant` | Cria (ou recria) a coleção `documentos_pt` no Qdrant e faz upsert de todos os vetores com metadados |
+| `gerar_embeddings` | Detecta GPU/CPU, carrega `PORTULAN/serafim-100m`, divide cada documento em chunks (500 palavras, overlap 50), gera vetores dim 768 por chunk e persiste em `gold.documentos_embeddings` |
+| `indexar_qdrant` | Cria (ou recria) a coleção `documentos_pt` no Qdrant e faz upsert de todos os chunks com metadados e texto do trecho |
 
 ---
 
@@ -208,6 +208,8 @@ O modelo **[PORTULAN/serafim-100m-portuguese-pt-sentence-encoder](https://huggin
 - Device selecionado automaticamente: CUDA (GPU) ou CPU
 - Similaridade por cosseno no Qdrant
 - Coleção: `documentos_pt`
+- Chunking: 500 palavras por chunk, overlap de 50 palavras entre chunks consecutivos
+- Cada chunk vira um ponto independente no Qdrant com o texto do trecho no payload
 
 ---
 
@@ -322,10 +324,16 @@ FROM main_silver.documentos_clean;
 -- Resumo analítico por tipo
 SELECT * FROM main_gold.resumo_por_tipo;
 
--- Embeddings gerados (dimensão do vetor)
-SELECT doc_id, file_name, file_type, title,
+-- Chunks vetorizados (um registro por chunk)
+SELECT doc_id, chunk_id, chunk_index, file_name, file_type, title,
        len(embedding) AS embedding_dim
-FROM gold.documentos_embeddings;
+FROM gold.documentos_embeddings
+ORDER BY file_name, chunk_index;
+
+-- Total de chunks por documento
+SELECT file_name, COUNT(*) AS total_chunks
+FROM gold.documentos_embeddings
+GROUP BY file_name;
 ```
 
 ---
@@ -340,30 +348,87 @@ http://localhost:6333/dashboard
 ```
 
 No dashboard você pode:
-- Ver a coleção `documentos_pt` com todos os vetores indexados
-- Inspecionar os payloads de cada ponto (`doc_id`, `file_name`, `file_type`, `title`, `author`)
+- Ver a coleção `documentos_pt` com todos os chunks indexados
+- Inspecionar os payloads de cada ponto (`chunk_id`, `doc_id`, `chunk_index`, `chunk_text`, `file_name`, `file_type`, `title`, `author`)
 - Executar buscas semânticas diretamente pela interface
 - Ver métricas da coleção (total de pontos, dimensão dos vetores, função de distância)
 
-**Busca semântica via API REST** (curl ou Postman):
-```bash
-curl -X POST http://localhost:6333/collections/documentos_pt/points/search \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "vector": [0.1, 0.2, ...],
-    "limit": 5,
-    "with_payload": true
-  }'
+### Postman — Exemplos de Requisições
+
+> Todas as requisições usam **método POST** com Body → raw → JSON.
+
+**Listar pontos com payload (sem vetor):**
+```
+POST http://localhost:6333/collections/documentos_pt/points/scroll
+```
+```json
+{
+  "limit": 100,
+  "with_payload": true,
+  "with_vectors": false
+}
 ```
 
-**Listar todos os pontos indexados:**
-```bash
-curl http://localhost:6333/collections/documentos_pt/points/scroll \
-  -H 'Content-Type: application/json' \
-  -d '{"limit": 100, "with_payload": true}'
+**Listar pontos com vetor incluído (para copiar e usar em buscas):**
+```
+POST http://localhost:6333/collections/documentos_pt/points/scroll
+```
+```json
+{
+  "limit": 1,
+  "with_payload": true,
+  "with_vectors": true
+}
+```
+
+**Busca semântica por similaridade:**
+```
+POST http://localhost:6333/collections/documentos_pt/points/search
+```
+```json
+{
+  "vector": [0.123, -0.456, ...],
+  "limit": 5,
+  "with_payload": true
+}
+```
+> Substitui o array pelo vetor copiado da requisição anterior.
+
+**Filtrar por documento específico:**
+```
+POST http://localhost:6333/collections/documentos_pt/points/search
+```
+```json
+{
+  "vector": [0.123, -0.456, ...],
+  "limit": 5,
+  "with_payload": true,
+  "filter": {
+    "must": [
+      { "key": "file_name", "match": { "value": "Boletim_Economico_ABRAINC_2tri25.pdf" } }
+    ]
+  }
+}
 ```
 
 **Informações da coleção:**
+```
+GET http://localhost:6333/collections/documentos_pt
+```
+
+### curl — Exemplos
+
 ```bash
+# Informações da coleção
 curl http://localhost:6333/collections/documentos_pt
+
+# Listar pontos com payload
+curl -X POST http://localhost:6333/collections/documentos_pt/points/scroll \
+  -H 'Content-Type: application/json' \
+  -d '{"limit": 100, "with_payload": true, "with_vectors": false}'
+
+# Busca semântica
+curl -X POST http://localhost:6333/collections/documentos_pt/points/search \
+  -H 'Content-Type: application/json' \
+  -d '{"vector": [0.123, -0.456, ...], "limit": 5, "with_payload": true}'
 ```
