@@ -11,6 +11,6 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt
 # pois o torch CPU já está presente e o sentence-transformers usa
 # torch.cuda.is_available() para decidir o device em runtime.
 RUN pip install --no-cache-dir \
-      torch==2.4.0 \
+      torch==2.5.1 \
       --index-url https://download.pytorch.org/whl/cu124 \
     || echo "CUDA torch não disponível, mantendo versão CPU"

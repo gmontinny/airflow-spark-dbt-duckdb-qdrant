@@ -243,6 +243,22 @@ docker compose -f docker-compose-airflow.yml down -v
 
 ---
 
+## Idempotência
+
+O pipeline pode ser executado múltiplas vezes sem duplicar dados. Cada execução recria todas as tabelas do zero:
+
+| Task | Comportamento |
+|---|---|
+| `extrair_bronze` | `DROP TABLE IF EXISTS` antes de criar `bronze.documentos_raw` |
+| `transformar_silver` | dbt `materialized: table` faz `DROP + CREATE` automaticamente |
+| `transformar_gold` | dbt `materialized: table` faz `DROP + CREATE` automaticamente |
+| `gerar_embeddings` | `DROP TABLE IF EXISTS` antes de criar `gold.documentos_embeddings` |
+| `indexar_qdrant` | Deleta a coleção `documentos_pt` e recria antes do upsert |
+
+O resultado final sempre reflete exatamente os arquivos presentes na pasta `datas/` no momento da execução.
+
+---
+
 ## Visualizando os Dados
 
 ### DuckDB — DataGrip / DBeaver / TablePlus
